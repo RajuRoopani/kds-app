@@ -1,0 +1,488 @@
+/**
+ * Kitchen Display System — Kanban Layout Styles
+ * 
+ * Responsive CSS for desktop and mobile layouts.
+ * Breakpoints:
+ * - Desktop: >= 1024px (5-column kanban)
+ * - Tablet: 768px - 1023px (5-column with squeeze)
+ * - Mobile: < 768px (1-column via tab selector)
+ */
+
+/* ============================================================================
+   Root Dashboard Container
+   ============================================================================ */
+
+#kds-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f9f9f9;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================================================
+   Error Banner
+   ============================================================================ */
+
+#error-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background-color: #fff3cd;
+  border-bottom: 1px solid #ffeaa7;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 999;
+  font-size: 14px;
+  color: #856404;
+  animation: slideDown 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#error-banner.hidden {
+  display: none;
+}
+
+#error-banner-dismiss {
+  background: none;
+  border: none;
+  color: #856404;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+  transition: opacity 150ms ease;
+}
+
+#error-banner-dismiss:hover {
+  opacity: 0.8;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-44px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-44px);
+    opacity: 0;
+  }
+}
+
+#error-banner.hide-animate {
+  animation: slideUp 150ms ease-in;
+}
+
+/* ============================================================================
+   Main Content Area
+   ============================================================================ */
+
+.kanban-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.kanban-content {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #f9f9f9;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.kanban-content::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kanban-content::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.kanban-content::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 4px;
+}
+
+.kanban-content::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* ============================================================================
+   Kanban Column Container
+   ============================================================================ */
+
+.kanban-column {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* Desktop: ~376px per column on 1920px screen */
+  width: calc((100vw - 32px) / 5);
+  max-height: calc(100vh - 200px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 150ms ease;
+}
+
+.kanban-column:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================================
+   Column Header (Sticky)
+   ============================================================================ */
+
+.column-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.count-badge {
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* ============================================================================
+   Card Container (Scrollable)
+   ============================================================================ */
+
+.card-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.card-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.card-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.card-container::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 3px;
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+/* ============================================================================
+   Order Card
+   ============================================================================ */
+
+.order-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 140px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  outline: none;
+}
+
+.order-card:hover {
+  background-color: #fafafa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: #d0d0d0;
+}
+
+.order-card:active {
+  border-color: #2196f3;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.order-card:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+.order-card[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   Empty State
+   ============================================================================ */
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
+  padding: 24px;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.empty-state p:first-child {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.empty-state p:last-child {
+  font-size: 12px;
+  color: #bbb;
+}
+
+/* ============================================================================
+   Mobile Tab Selector
+   ============================================================================ */
+
+.mobile-tab-selector {
+  display: none; /* Hidden on desktop/tablet */
+}
+
+.mobile-tab {
+  flex: 1;
+  min-width: 80px;
+  padding: 12px 8px;
+  border: none;
+  background-color: #ffffff;
+  color: #999;
+  font-size: 13px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+}
+
+.mobile-tab:hover {
+  background-color: #f5f5f5;
+}
+
+.mobile-tab.active {
+  background-color: #f5f5f5;
+  color: #1a1a1a;
+  font-weight: bold;
+  border-bottom-color: #2196f3;
+}
+
+.mobile-tab:focus-visible {
+  outline: 2px solid #2196f3;
+  outline-offset: -2px;
+}
+
+/* ============================================================================
+   Responsive: Tablet (768px - 1023px)
+   ============================================================================ */
+
+@media (max-width: 1023px) {
+  .kanban-column {
+    width: calc((100vw - 32px) / 5);
+  }
+
+  .kanban-content {
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* ============================================================================
+   Responsive: Mobile (< 768px)
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  /* Show mobile tab selector */
+  .mobile-tab-selector {
+    display: flex;
+    gap: 0;
+    background-color: #ffffff;
+    border-bottom: 2px solid #e0e0e0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  /* Hide kanban horizontal scroll */
+  .kanban-content {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  /* Single column layout */
+  .kanban-column {
+    width: calc(100vw - 16px);
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .kanban-column:hover {
+    box-shadow: none;
+  }
+
+  .kanban-column[data-hidden='true'] {
+    display: none;
+  }
+
+  /* Mobile card styling */
+  .order-card {
+    min-height: auto;
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  /* Mobile empty state */
+  .empty-state {
+    min-height: 100px;
+    padding: 16px;
+  }
+
+  /* Column header on mobile */
+  .column-header {
+    padding: 12px;
+    margin-bottom: 8px;
+    margin-top: 16px;
+    border-radius: 6px;
+    background-color: #f5f5f5;
+    border-bottom: none;
+    position: static;
+  }
+
+  .column-header:first-of-type {
+    margin-top: 0;
+  }
+
+  /* Card container gap on mobile */
+  .card-container {
+    gap: 6px;
+    padding: 0;
+  }
+
+  .card-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in column on mobile */
+  }
+}
+
+/* ============================================================================
+   Responsive: Small Mobile (< 600px)
+   ============================================================================ */
+
+@media (max-width: 599px) {
+  .kanban-content {
+    padding: 4px;
+  }
+
+  .kanban-column {
+    width: calc(100vw - 8px);
+  }
+
+  .mobile-tab {
+    min-width: 60px;
+    padding: 10px 6px;
+    font-size: 12px;
+  }
+
+  .order-card {
+    padding: 10px;
+  }
+
+  .column-header {
+    padding: 10px;
+    margin-bottom: 6px;
+    margin-top: 12px;
+  }
+}
+
+/* ============================================================================
+   Dark Mode Support (Future)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Placeholder for future dark mode implementation */
+  /* Ensure semantic colors are used in component styles */
+}
+
+/* ============================================================================
+   Reduced Motion Support
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================================
+   Print Styles
+   ============================================================================ */
+
+@media print {
+  #error-banner,
+  .mobile-tab-selector {
+    display: none !important;
+  }
+
+  .kanban-content {
+    overflow: visible;
+    display: block;
+  }
+
+  .kanban-column {
+    page-break-inside: avoid;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

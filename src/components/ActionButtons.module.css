@@ -1,0 +1,207 @@
+/**
+ * ActionButtons Styling
+ * 
+ * Handles button visibility based on status, loading states, and error states.
+ * Touch-friendly (44px min height) with clear visual feedback.
+ */
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  width: 100%;
+}
+
+.button {
+  /* Layout */
+  padding: 12px 16px;
+  min-height: 44px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+  
+  /* Typography */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+
+.button:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Variant: Primary (blue, main action) */
+.primary {
+  background-color: #2196f3;
+  color: #ffffff;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: #1976d2;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.primary:active:not(:disabled) {
+  background-color: #1565c0;
+}
+
+/* Variant: Secondary (neutral, less prominent) */
+.secondary {
+  background-color: #f5f5f5;
+  color: #1a1a1a;
+  border: 1px solid #e0e0e0;
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: #eeeeee;
+  border-color: #d0d0d0;
+}
+
+.secondary:active:not(:disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Variant: Destructive (red, cancel/dangerous action) */
+.destructive {
+  background-color: #f44336;
+  color: #ffffff;
+}
+
+.destructive:hover:not(:disabled) {
+  background-color: #d32f2f;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
+
+.destructive:active:not(:disabled) {
+  background-color: #c62828;
+}
+
+/* Spinner animation */
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.primary .spinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: rgba(255, 255, 255, 0.9);
+}
+
+.secondary .spinner {
+  border-color: rgba(26, 26, 26, 0.3);
+  border-top-color: rgba(26, 26, 26, 0.8);
+}
+
+.destructive .spinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error container */
+.errorContainer {
+  padding: 12px;
+  border: 1px solid #ef5350;
+  border-radius: 6px;
+  background-color: #ffebee;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.errorMessage {
+  color: #c62828;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Confirmation dialog */
+.confirmationDialog {
+  padding: 16px;
+  border: 1px solid #2196f3;
+  border-radius: 6px;
+  background-color: #e3f2fd;
+  margin-bottom: 12px;
+}
+
+.confirmationDialog p {
+  margin: 0 0 12px 0;
+  color: #1565c0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.confirmationButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.confirmationButtons .button {
+  flex: 1;
+  min-height: 40px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+/* Dismiss countdown display */
+.dismissCountdown {
+  padding: 12px;
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .button {
+    padding: 10px 12px;
+    min-height: 40px;
+    font-size: 13px;
+  }
+
+  .confirmationButtons {
+    flex-direction: row;
+  }
+
+  .confirmationButtons .button {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
